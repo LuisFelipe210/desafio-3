@@ -1,0 +1,60 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Arquivos de runtime e cache
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-cache/
+pnpm-lock.yaml # Se você usar pnpm em algum momento
+yarn.lock      # Se você não quiser versionar o yarn.lock (geralmente é recomendado versioná-lo)
+
+# Arquivos específicos de Sistema Operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos de IDEs e Editores
+.idea/
+.vscode/
+*.swp
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de teste e cobertura (dependendo da sua configuração de teste)
+coverage/
+.nyc_output/
+
+# Arquivos de build específicos do React (Create React App)
+frontend/build/
+frontend/node_modules/
+frontend/.env # Se houver .env específico do frontend com segredos
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Arquivos de build específicos do Backend com TypeScript
+backend/dist/
+backend/node_modules/
+backend/.env # Se houver .env específico do backend com segredos
+backend/.env.local
+# Se você gerar mapas de origem .js.map e não quiser versioná-los no backend
+# backend/dist/**/*.js.map
+
+# Outros
+.tmp/
+*.tgz   
