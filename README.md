@@ -67,7 +67,7 @@ Este é um projeto full-stack desenvolvido como parte do Desafio Relâmpago 3 da
 
 1.  **Clone o Repositório (se aplicável):**
     ```bash
-    git clone <sua-url-do-repositorio>
+    git clone git@github.com:LuisFelipe210/desafio-3.git
     cd projeto-manutencao-ativos
     ```
 
@@ -143,7 +143,7 @@ Este é um projeto full-stack desenvolvido como parte do Desafio Relâmpago 3 da
 
 ## Autor
 
-*   [Seu Nome / Seu Usuário do GitHub]
+*   [Luis Felipe / luisfelipe210]
 *   Desafio proposto por Alpha Ed/Tech.
 
 ---
