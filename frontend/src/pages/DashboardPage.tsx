@@ -21,7 +21,6 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { alpha } from '@mui/material/styles';
 
-
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const theme = useTheme();
@@ -47,17 +46,16 @@ const DashboardPage: React.FC = () => {
     fetchDashboardData();
   }, []);
 
-
   const NoItemsContent = () => (
     <Paper 
-        elevation={0} 
-        sx={{ 
-            textAlign: 'center', 
-            p: {xs: 3, md: 5}, 
-            border: `2px dashed ${theme.palette.divider}`, 
-            borderRadius: 3,
-            backgroundColor: alpha(theme.palette.success.main, 0.05)
-        }}
+      elevation={0} 
+      sx={{ 
+        textAlign: 'center', 
+        p: { xs: 3, md: 5 }, 
+        border: `2px dashed ${theme.palette.divider}`, 
+        borderRadius: 3,
+        backgroundColor: alpha(theme.palette.success.main, 0.05)
+      }}
     >
       <NotificationsActiveIcon sx={{ fontSize: 60, color: theme.palette.success.main, mb: 2, opacity: 0.7 }} />
       <Typography variant="h5" gutterBottom sx={{ fontWeight: 500, color: theme.palette.success.dark }}>
@@ -70,96 +68,60 @@ const DashboardPage: React.FC = () => {
   );
 
   if (loading) {
-    
     const skeletonCount = 4; 
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Stack spacing={3}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Skeleton variant="text" width="60%" height={60} animation="wave" />
-            <Skeleton variant="rectangular" width={120} height={40} animation="wave" sx={{borderRadius: 2}}/>
+            <Skeleton variant="rectangular" width={120} height={40} animation="wave" sx={{ borderRadius: 2 }} />
           </Stack>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: theme.spacing(2.5) }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: theme.spacing(2.5) }}>
             {Array.from(new Array(skeletonCount)).map((_, index) => (
-              <Box 
-                key={index}
-                sx={{ 
-                  flexGrow: 1, 
-                  flexBasis: {
-                      xs: '100%',
-                      sm: `calc(50% - ${theme.spacing(1.25)})`, 
-                      md: `calc(33.333% - ${theme.spacing(1.66)})`,
-                      lg: `calc(25% - ${theme.spacing(1.875)})` 
-                  },
-                  minWidth: {sm: 280} 
-                }}
-              >
-                <Skeleton variant="rectangular" height={180} animation="wave" sx={{borderRadius: 3}} />
-              </Box>
+              <Skeleton key={index} variant="rectangular" height={180} animation="wave" sx={{ borderRadius: 3 }} />
             ))}
           </Box>
         </Stack>
       </Container>
     );
   }
-  
-  const cardSpacing = theme.spacing(2.5); 
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Fade in timeout={500}>
         <Box>
           <Box sx={{ mb: 4 }}>
-            <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between"  >
+            <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between">
               <Stack direction="row" alignItems="center" spacing={1.5}>
-                <NotificationsActiveIcon sx={{  }} />
-                <Typography variant="h3"  > Painel de Alertas </Typography>
-                <Chip label={`${upcomingItems.length} ${upcomingItems.length === 1 ? 'alerta' : 'alertas'}`}  />
+                <NotificationsActiveIcon />
+                <Typography variant="h3"> Painel de Alertas </Typography>
+                <Chip label={`${upcomingItems.length} ${upcomingItems.length === 1 ? 'alerta' : 'alertas'}`} />
               </Stack>
-              <Button variant="outlined" startIcon={<RefreshIcon />} onClick={fetchDashboardData}  > Atualizar </Button>
+              <Button variant="outlined" startIcon={<RefreshIcon />} onClick={fetchDashboardData}> Atualizar </Button>
             </Stack>
             <Typography variant="body1" color="text.secondary">
-              Olá, <Box component="span" sx={{ fontWeight: 500, color: theme.palette.text.primary }}>{user?.email || 'Usuário'}</Box>! 
-              Aqui estão as manutenções que requerem sua atenção.
+              Olá, <Box component="span" sx={{ fontWeight: 500, color: theme.palette.text.primary }}>{user?.email || 'Usuário'}</Box>! Aqui estão as manutenções que requerem sua atenção.
             </Typography>
           </Box>
 
-          {error && ( 
+          {error && (
             <Fade in>
-              <Alert  > {error} </Alert>
+              <Alert> {error} </Alert>
             </Fade>
           )}
-          
+
           {!loading && !error && upcomingItems.length === 0 && <NoItemsContent />}
 
           {upcomingItems.length > 0 && !error && (
             <Box 
               sx={{ 
-                display: 'flex', 
-                flexWrap: 'wrap', 
-                gap: cardSpacing,
-                }}
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: theme.spacing(2.5)
+              }}
             >
               {upcomingItems.map((item) => (
-                <Box 
-                  key={`${item.asset_id}-${item.maintenance_record_id || item.next_maintenance_condition || 'item'}`}
-                  sx={{
-                    flexGrow: 1,
-                    flexShrink: 0, 
-                    flexBasis: {
-                        xs: '100%',
-                        sm: `calc(50% - ${cardSpacing})`, 
-                        md: `calc(33.333% - ${cardSpacing})`,
-                        lg: `calc(25% - ${cardSpacing})`,
-                    },
-                   
-                    minWidth: { xs: 'none', sm: '280px' }, 
-                  }}
-                >
-                  <UpcomingMaintenanceItem 
-                    item={item} 
-                  />
-                </Box>
+                <UpcomingMaintenanceItem key={`${item.asset_id}-${item.maintenance_record_id || item.next_maintenance_condition || 'item'}-${item.asset_name}`} item={item} />
               ))}
             </Box>
           )}
